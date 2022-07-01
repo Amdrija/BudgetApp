@@ -70,8 +70,6 @@ namespace BudgetApp
                        NameClaimType = ClaimTypes.NameIdentifier
                    };
                });
-
-            //services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -87,8 +85,6 @@ namespace BudgetApp
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            //app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseAuthentication();
             app.UseAuthorization();
