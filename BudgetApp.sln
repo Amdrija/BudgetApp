@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetApp.Apllication", "Bu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{E249498F-CD98-4096-9001-1EE982967C97}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetApp.EntityFramework", "BudgetApp.EntityFramework\BudgetApp.EntityFramework.csproj", "{9456D9BE-D7EC-4725-AA7B-12F7476AD4EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetApp.Migrations", "BudgetApp.Migrations\BudgetApp.Migrations.csproj", "{B5681820-B477-4311-BBE5-6A6300165264}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,11 +33,23 @@ Global
 		{20479BF5-4BF3-4856-92C2-44DC88EA7C73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20479BF5-4BF3-4856-92C2-44DC88EA7C73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20479BF5-4BF3-4856-92C2-44DC88EA7C73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9456D9BE-D7EC-4725-AA7B-12F7476AD4EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9456D9BE-D7EC-4725-AA7B-12F7476AD4EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9456D9BE-D7EC-4725-AA7B-12F7476AD4EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9456D9BE-D7EC-4725-AA7B-12F7476AD4EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5681820-B477-4311-BBE5-6A6300165264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5681820-B477-4311-BBE5-6A6300165264}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5681820-B477-4311-BBE5-6A6300165264}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5681820-B477-4311-BBE5-6A6300165264}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {050EC5D9-0853-48EB-8902-3BF22F8B8675}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9456D9BE-D7EC-4725-AA7B-12F7476AD4EB} = {E249498F-CD98-4096-9001-1EE982967C97}
+		{B5681820-B477-4311-BBE5-6A6300165264} = {E249498F-CD98-4096-9001-1EE982967C97}
 	EndGlobalSection
 EndGlobal
