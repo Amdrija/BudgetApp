@@ -1,4 +1,6 @@
-﻿namespace BudgetApp.Domain
+﻿using System;
+
+namespace BudgetApp.Domain
 {
     public class Category
     {
