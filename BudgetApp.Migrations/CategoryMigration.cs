@@ -9,7 +9,7 @@ namespace BudgetApp.Migrations
         {
             this.Create.Table("Category")
                 .WithColumn("Id")
-                .AsString()
+                .AsGuid()
                 .PrimaryKey()
                 .WithColumn("Name")
                 .AsString()
