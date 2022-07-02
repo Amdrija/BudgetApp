@@ -10,4 +10,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BudgetApp.Apllication\BudgetApp.Apllication.csproj" />
+    <ProjectReference Include="..\BudgetApp.Domain\BudgetApp.Domain.csproj" />
+    <ProjectReference Include="..\BudgetApp.EntityFramework\BudgetApp.EntityFramework.csproj" />
+  </ItemGroup>
+
 </Project>

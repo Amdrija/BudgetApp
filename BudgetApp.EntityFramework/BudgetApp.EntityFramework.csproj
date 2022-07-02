@@ -8,6 +8,11 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0-preview.5.22302.2" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.0-preview.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BudgetApp.Apllication\BudgetApp.Apllication.csproj" />
     </ItemGroup>
 
 </Project>

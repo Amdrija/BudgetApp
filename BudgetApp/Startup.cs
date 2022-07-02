@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BudgetApp.EntityFramework;
 
 namespace BudgetApp
 {
@@ -31,45 +32,56 @@ namespace BudgetApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "BudgetApp", Version = "v1" });
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+            services.AddSwaggerGen(
+                c =>
                 {
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer",
-                    BearerFormat = "JWT",
-                    In = ParameterLocation.Header,
-                    Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
-                });
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "BudgetApp", Version = "v1" });
+                    c.AddSecurityDefinition(
+                        "Bearer",
+                        new OpenApiSecurityScheme()
+                        {
+                            Name = "Authorization",
+                            Type = SecuritySchemeType.ApiKey,
+                            Scheme = "Bearer",
+                            BearerFormat = "JWT",
+                            In = ParameterLocation.Header,
+                            Description =
+                                "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
+                        });
 
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement() {
-                    {
-                        new OpenApiSecurityScheme {
-                            Reference = new OpenApiReference {
-                                Type = ReferenceType.SecurityScheme,
-                                    Id = "Bearer"
+                    c.AddSecurityRequirement(
+                        new OpenApiSecurityRequirement()
+                        {
+                            {
+                                new OpenApiSecurityScheme
+                                {
+                                    Reference = new OpenApiReference
+                                    {
+                                        Type = ReferenceType.SecurityScheme,
+                                        Id = "Bearer"
+                                    }
+                                },
+                                new string[] { }
                             }
-                        },
-                        new string[] {}
-                    }
+                        });
                 });
-            });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-               .AddJwtBearer(options =>
-               {
-                   options.Authority = this.Configuration.GetSection("Auth0").GetValue<string>("Domain");
-                   options.Audience = this.Configuration.GetSection("Auth0").GetValue<string>("Audience");
-                    // If the access token does not have a `sub` claim, `User.Identity.Name` will be `null`. Map it to a different claim by setting the NameClaimType below.
-                   options.TokenValidationParameters = new TokenValidationParameters
-                   {
-                       NameClaimType = ClaimTypes.NameIdentifier
-                   };
-               });
+                    .AddJwtBearer(
+                        options =>
+                        {
+                            options.Authority = this.Configuration.GetSection("Auth0").GetValue<string>("Domain");
+                            options.Audience = this.Configuration.GetSection("Auth0").GetValue<string>("Audience");
+                            // If the access token does not have a `sub` claim, `User.Identity.Name` will be `null`. Map it to a different claim by setting the NameClaimType below.
+                            options.TokenValidationParameters = new TokenValidationParameters
+                            {
+                                NameClaimType = ClaimTypes.NameIdentifier
+                            };
+                        });
+
+            services.AddDbContext(this.Configuration)
+                    .AddRepositories();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -89,11 +101,11 @@ namespace BudgetApp
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-
+            app.UseEndpoints(
+                endpoints =>
+                {
+                    endpoints.MapControllers();
+                });
         }
     }
 }
