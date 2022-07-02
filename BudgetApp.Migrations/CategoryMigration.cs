@@ -13,7 +13,6 @@ namespace BudgetApp.Migrations
                 .PrimaryKey()
                 .WithColumn("Name")
                 .AsString()
-                .Unique()
                 .NotNullable()
                 .WithColumn("Color")
                 .AsString()
@@ -21,6 +20,10 @@ namespace BudgetApp.Migrations
                 .WithColumn("UserId")
                 .AsString()
                 .NotNullable();
+
+            this.Create.UniqueConstraint("NameAndUserId")
+                .OnTable("Category")
+                .Columns("Name", "UserId");
         }
 
         public override void Down()
