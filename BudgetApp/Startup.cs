@@ -104,6 +104,8 @@ namespace BudgetApp
 
             app.UseRouting();
 
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+            
             app.UseAuthentication();
             app.UseAuthorization();
 
