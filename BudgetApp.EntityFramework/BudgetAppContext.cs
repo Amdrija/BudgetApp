@@ -12,6 +12,9 @@ namespace BudgetApp.EntityFramework
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Category>()
+                        .ToTable("Category");
         }
     }
 }

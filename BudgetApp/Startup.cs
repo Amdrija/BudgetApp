@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BudgetApp.Configuration;
 using BudgetApp.EntityFramework;
 using BudgetApp.Validators;
 using FluentValidation;
@@ -83,7 +84,8 @@ namespace BudgetApp
                         });
 
             services.AddDbContext(this.Configuration)
-                    .AddRepositories();
+                    .AddRepositories()
+                    .AddCategoryUseCases();
 
             services.AddValidatorsFromAssemblyContaining<AddCategoryAPIReqeustValidator>();
         }
