@@ -7,8 +7,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using BudgetApp.Apllication;
 using BudgetApp.Apllication.Category.AddCategory;
+using BudgetApp.Apllication.Category.DeleteCategory;
 using BudgetApp.Apllication.Category.EditCategory;
 using BudgetApp.Apllication.Category.GetCategories;
+using BudgetApp.Apllication.Category.GetCategory;
 using BudgetApp.Domain.Category;
 using BudgetApp.Requests;
 
@@ -27,7 +29,7 @@ namespace BudgetApp.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Category>> AddCategory([FromServices] IUseCase<GetCategoriesRequest, GetCategoriesResponse> useCase)
+        public async Task<List<Category>> GetCategories([FromServices] IUseCase<GetCategoriesRequest, GetCategoriesResponse> useCase)
         {
             GetCategoriesResponse response = await useCase.ExecuteAsync(new GetCategoriesRequest()
             {
@@ -35,6 +37,19 @@ namespace BudgetApp.Controllers
             });
 
             return response.Categories;
+        }
+        
+        [HttpGet("{id}")]
+        public async Task<Category> GetCategories([FromServices] IUseCase<GetCategoryRequest, GetCategoryResponse> useCase,
+            [FromRoute] Guid id)
+        {
+            GetCategoryResponse response = await useCase.ExecuteAsync(new GetCategoryRequest()
+            {
+                UserId = HttpContext.User.Identity.Name,
+                Id = id
+            });
+
+            return response.Category;
         }
         
         [HttpPost]
@@ -65,6 +80,17 @@ namespace BudgetApp.Controllers
             });
 
             return response.Category;
+        }
+        
+        [HttpDelete("{id}")]
+        public async Task DeleteCategory([FromServices] IUseCase<DeleteCategoryRequest, DeleteCategoryResponse> useCase,
+            [FromRoute] Guid id)
+        {
+            DeleteCategoryResponse response = await useCase.ExecuteAsync(new DeleteCategoryRequest()
+            {
+                UserId = HttpContext.User.Identity.Name,
+                Id = id
+            });
         }
     }
 }

@@ -46,7 +46,7 @@ namespace BudgetApp.EntityFramework
             {
                 await this.dbContext.SaveChangesAsync();
             }
-            catch (DbUpdateException e) when (e.InnerException is PostgresException pge)
+            catch (DbUpdateException e) when (e.InnerException is PostgresException { SqlState: "23505" })
             {
                 throw new CategoryNameTakenException(category.Name);
             }
@@ -62,12 +62,27 @@ namespace BudgetApp.EntityFramework
             {
                 await this.dbContext.SaveChangesAsync();
             }
-            catch (DbUpdateException e) when (e.InnerException is PostgresException pge)
+            catch (DbUpdateException e) when (e.InnerException is PostgresException { SqlState: "23505" })
             {
                 throw new CategoryNameTakenException(category.Name);
             }
 
             return category;
+        }
+
+        public async Task DeleteAsync(Category category)
+        {
+            this.dbContext.Categories.Remove(category);
+
+            try
+            {
+                await this.dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateException e) when (e.InnerException is PostgresException { SqlState: "23505" })
+            {
+                //TODO: UPDATE TO PREFENT DELETE IF THERE ARE EXPENSES IN THE CATEGORY
+                throw new CategoryNameTakenException(category.Name);
+            }
         }
     }
 }

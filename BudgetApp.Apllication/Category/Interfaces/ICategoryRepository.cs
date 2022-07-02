@@ -14,5 +14,7 @@ namespace BudgetApp.Apllication.Category.Interfaces
         Task<Domain.Category.Category> AddAsync(Domain.Category.Category category);
 
         Task<Domain.Category.Category> EditAsync(Domain.Category.Category category);
+
+        Task DeleteAsync(Domain.Category.Category category);
     }
 }
