@@ -15,7 +15,7 @@ namespace BudgetApp.Apllication.Category.EditCategory
 
         public async Task<EditCategoryResponse> ExecuteAsync(EditCategoryRequest request)
         {
-            var category = await this.repository.GetAsync(request.Id, request.UserId);
+            var category = await this.repository.GetOneAsync(request.Id, request.UserId);
             
             category.Color = request.Color;
             category.Name = request.Name;

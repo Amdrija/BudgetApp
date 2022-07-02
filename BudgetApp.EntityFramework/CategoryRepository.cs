@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace BudgetApp.EntityFramework
             this.dbContext = dbContext;
         }
 
-        public async Task<Category> GetAsync(Guid id, string userId)
+        public async Task<Category> GetOneAsync(Guid id, string userId)
         {
             Category? category = await this.dbContext.Categories.Where(c => c.Id == id && c.UserId == userId)
                                            .FirstOrDefaultAsync();
@@ -30,6 +31,11 @@ namespace BudgetApp.EntityFramework
             }
 
             return category;
+        }
+
+        public Task<List<Category>> GetAsync(string userId)
+        {
+            return this.dbContext.Categories.Where(c => c.UserId == userId).ToListAsync();
         }
 
         public async Task<Category> AddAsync(Category category)
