@@ -103,12 +103,12 @@ namespace BudgetApp
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseMiddleware<ErrorHandlerMiddleware>();
             
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+            
             app.UseEndpoints(
                 endpoints =>
                 {

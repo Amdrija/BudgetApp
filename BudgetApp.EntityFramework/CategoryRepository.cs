@@ -1,6 +1,11 @@
+using System;
+using System.Data.Common;
 using System.Threading.Tasks;
+using BudgetApp.Apllication.Category.Exception;
 using BudgetApp.Apllication.Category.Interfaces;
 using BudgetApp.Domain.Category;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace BudgetApp.EntityFramework
 {
@@ -16,7 +21,15 @@ namespace BudgetApp.EntityFramework
         public async Task<Category> AddAsync(Category category)
         {
             await this.dbContext.AddAsync(category);
-            await this.dbContext.SaveChangesAsync();
+
+            try
+            {
+                await this.dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateException e) when (e.InnerException is PostgresException pge)
+            {
+                throw new CategoryNameTakenException(category.Name);
+            }
 
             return category;
         }
