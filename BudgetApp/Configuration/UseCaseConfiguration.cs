@@ -1,5 +1,6 @@
 using BudgetApp.Apllication;
 using BudgetApp.Apllication.Category.AddCategory;
+using BudgetApp.Apllication.Category.AddDefaultCategories;
 using BudgetApp.Apllication.Category.DeleteCategory;
 using BudgetApp.Apllication.Category.EditCategory;
 using BudgetApp.Apllication.Category.GetCategories;
@@ -21,7 +22,8 @@ namespace BudgetApp.Configuration
                            .AddTransient<IUseCase<EditCategoryRequest, EditCategoryResponse>, EditCategoryUseCase>()
                            .AddTransient<IUseCase<GetCategoriesRequest, GetCategoriesResponse>, GetCategoriesUseCase>()
                            .AddTransient<IUseCase<GetCategoryRequest, GetCategoryResponse>, GetCategoryUseCase>()
-                           .AddTransient<IUseCase<DeleteCategoryRequest, DeleteCategoryResponse>, DeleteCategoryUseCase>();
+                           .AddTransient<IUseCase<DeleteCategoryRequest, DeleteCategoryResponse>, DeleteCategoryUseCase>()
+                           .AddTransient<IUseCase<AddDefaultCategoriesRequest, AddDefaultCategoriesResponse>, AddDefaultCategoriesUseCase>();
         }
     }
 }

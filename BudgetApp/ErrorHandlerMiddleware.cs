@@ -42,6 +42,9 @@ namespace BudgetApp
                     case DomainException e:
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
+                    case UnauthorizedAccessException e:
+                        response.StatusCode = (int) HttpStatusCode.Unauthorized;
+                        break;
                     default:
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;
                         break;

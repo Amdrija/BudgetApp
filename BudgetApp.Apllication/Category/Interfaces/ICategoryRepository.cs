@@ -13,6 +13,8 @@ namespace BudgetApp.Apllication.Category.Interfaces
         
         Task<Domain.Category.Category> AddAsync(Domain.Category.Category category);
 
+        Task<List<BudgetApp.Domain.Category.Category>> AddRangeAsync(List<Domain.Category.Category> categories);
+
         Task<Domain.Category.Category> EditAsync(Domain.Category.Category category);
 
         Task DeleteAsync(Domain.Category.Category category);

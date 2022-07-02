@@ -7,17 +7,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using BudgetApp.Apllication;
 using BudgetApp.Apllication.Category.AddCategory;
+using BudgetApp.Apllication.Category.AddDefaultCategories;
 using BudgetApp.Apllication.Category.DeleteCategory;
 using BudgetApp.Apllication.Category.EditCategory;
 using BudgetApp.Apllication.Category.GetCategories;
 using BudgetApp.Apllication.Category.GetCategory;
 using BudgetApp.Domain.Category;
 using BudgetApp.Requests;
+using Microsoft.Extensions.Configuration;
 
 namespace BudgetApp.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("[controller]")]
     public class CategoryController : ControllerBase
     {
@@ -29,6 +30,7 @@ namespace BudgetApp.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<List<Category>> GetCategories([FromServices] IUseCase<GetCategoriesRequest, GetCategoriesResponse> useCase)
         {
             GetCategoriesResponse response = await useCase.ExecuteAsync(new GetCategoriesRequest()
@@ -40,7 +42,8 @@ namespace BudgetApp.Controllers
         }
         
         [HttpGet("{id}")]
-        public async Task<Category> GetCategories([FromServices] IUseCase<GetCategoryRequest, GetCategoryResponse> useCase,
+        [Authorize]
+        public async Task<Category> GetCategory([FromServices] IUseCase<GetCategoryRequest, GetCategoryResponse> useCase,
             [FromRoute] Guid id)
         {
             GetCategoryResponse response = await useCase.ExecuteAsync(new GetCategoryRequest()
@@ -53,6 +56,7 @@ namespace BudgetApp.Controllers
         }
         
         [HttpPost]
+        [Authorize]
         public async Task<Category> AddCategory([FromServices] IUseCase<AddCategoryRequest, AddCategoryResponse> useCase,
             [FromBody] ModifyCategoryAPIRequest request)
         {
@@ -67,6 +71,7 @@ namespace BudgetApp.Controllers
         }
         
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<Category> EditCategory([FromServices] IUseCase<EditCategoryRequest, EditCategoryResponse> useCase,
             [FromBody] ModifyCategoryAPIRequest request,
             [FromRoute] Guid id)
@@ -83,6 +88,7 @@ namespace BudgetApp.Controllers
         }
         
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task DeleteCategory([FromServices] IUseCase<DeleteCategoryRequest, DeleteCategoryResponse> useCase,
             [FromRoute] Guid id)
         {
@@ -90,6 +96,23 @@ namespace BudgetApp.Controllers
             {
                 UserId = HttpContext.User.Identity.Name,
                 Id = id
+            });
+        }
+        
+        [HttpPost]
+        [Route("default")]
+        public async Task AddDefaultCategories([FromServices] IUseCase<AddDefaultCategoriesRequest, AddDefaultCategoriesResponse> useCase,
+            [FromBody] AddDefaultCategoriesAPIRequest request,
+            [FromServices] IConfiguration configuration)
+        {
+            if (configuration.GetSection("Auth0").GetValue<string>("Secret") != request.Secret)
+            {
+                throw new UnauthorizedAccessException();
+            }
+            
+            await useCase.ExecuteAsync(new AddDefaultCategoriesRequest()
+            {
+                UserId = request.UserId
             });
         }
     }

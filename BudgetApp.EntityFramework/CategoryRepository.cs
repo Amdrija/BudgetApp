@@ -54,6 +54,21 @@ namespace BudgetApp.EntityFramework
             return category;
         }
 
+        public async Task<List<Category>> AddRangeAsync(List<Category> categories)
+        {
+            await this.dbContext.AddRangeAsync(categories);
+            try
+            {
+                await this.dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateException e) when (e.InnerException is PostgresException { SqlState: "23505" })
+            {
+                throw new CategoryNameTakenException(String.Join(" or ", categories.Select(c => c.Name)));
+            }
+            
+            return categories;
+        }
+
         public async Task<Category> EditAsync(Category category)
         {
             this.dbContext.Update(category);
@@ -78,7 +93,7 @@ namespace BudgetApp.EntityFramework
             {
                 await this.dbContext.SaveChangesAsync();
             }
-            catch (DbUpdateException e) when (e.InnerException is PostgresException { SqlState: "23505" })
+            catch (DbUpdateException e) when (e.InnerException is PostgresException)
             {
                 //TODO: UPDATE TO PREFENT DELETE IF THERE ARE EXPENSES IN THE CATEGORY
                 throw new CategoryNameTakenException(category.Name);
