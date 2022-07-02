@@ -6,16 +6,16 @@ namespace BudgetApp.Domain.Category
 {
     public class Category
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; init; }
 
-        public string Name { get; init; }
+        public string Name { get; set; }
 
         private string color;
         
         public string Color
         {
             get => this.color;
-            init
+            set
             {
                 if (!IsColorHex(value))
                 {

@@ -1,5 +1,6 @@
 using BudgetApp.Apllication;
 using BudgetApp.Apllication.Category.AddCategory;
+using BudgetApp.Apllication.Category.EditCategory;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BudgetApp.Configuration
@@ -13,7 +14,8 @@ namespace BudgetApp.Configuration
         
         public static IServiceCollection AddCategoryUseCases(this IServiceCollection services)
         {
-            return services.AddTransient<IUseCase<AddCategoryRequest, AddCategoryResponse>, AddCategoryUseCase>();
+            return services.AddTransient<IUseCase<AddCategoryRequest, AddCategoryResponse>, AddCategoryUseCase>()
+                           .AddTransient<IUseCase<EditCategoryRequest, EditCategoryResponse>, EditCategoryUseCase>();
         }
     }
 }

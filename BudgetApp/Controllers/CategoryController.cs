@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BudgetApp.Apllication;
 using BudgetApp.Apllication.Category.AddCategory;
+using BudgetApp.Apllication.Category.EditCategory;
 using BudgetApp.Domain.Category;
 using BudgetApp.Requests;
 
@@ -25,11 +26,27 @@ namespace BudgetApp.Controllers
         }
 
         [HttpPost]
-        public async Task<Category> Post([FromServices] IUseCase<AddCategoryRequest, AddCategoryResponse> useCase,
-            [FromBody] AddCategoryAPIRequest request)
+        public async Task<Category> AddCategory([FromServices] IUseCase<AddCategoryRequest, AddCategoryResponse> useCase,
+            [FromBody] ModifyCategoryAPIRequest request)
         {
             AddCategoryResponse response = await useCase.ExecuteAsync(new AddCategoryRequest()
             {
+                Color = request.Color,
+                Name = request.Name,
+                UserId = HttpContext.User.Identity.Name
+            });
+
+            return response.Category;
+        }
+        
+        [HttpPut("{id}")]
+        public async Task<Category> EditCategory([FromServices] IUseCase<EditCategoryRequest, EditCategoryResponse> useCase,
+            [FromBody] ModifyCategoryAPIRequest request,
+            [FromRoute] Guid id)
+        {
+            EditCategoryResponse response = await useCase.ExecuteAsync(new EditCategoryRequest()
+            {
+                Id = id,
                 Color = request.Color,
                 Name = request.Name,
                 UserId = HttpContext.User.Identity.Name

@@ -1,6 +1,6 @@
 namespace BudgetApp.Requests
 {
-    public class AddCategoryAPIRequest
+    public class ModifyCategoryAPIRequest
     {
         public string Name { get; set; }
 

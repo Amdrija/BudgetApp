@@ -5,9 +5,9 @@ using FluentValidation;
 
 namespace BudgetApp.Validators
 {
-    public class AddCategoryAPIReqeustValidator : AbstractValidator<AddCategoryAPIRequest>
+    public class ModifyCategoryAPIReqeustValidator : AbstractValidator<ModifyCategoryAPIRequest>
     {
-        public AddCategoryAPIReqeustValidator()
+        public ModifyCategoryAPIReqeustValidator()
         {
             this.RuleFor(r => r.Color).NotEmpty().Must(Category.IsColorHex);
             this.RuleFor(r => r.Name).NotEmpty();
