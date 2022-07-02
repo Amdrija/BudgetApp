@@ -15,6 +15,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BudgetApp.EntityFramework;
+using BudgetApp.Validators;
+using FluentValidation;
 
 namespace BudgetApp
 {
@@ -82,6 +84,8 @@ namespace BudgetApp
 
             services.AddDbContext(this.Configuration)
                     .AddRepositories();
+
+            services.AddValidatorsFromAssemblyContaining<AddCategoryAPIReqeustValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
