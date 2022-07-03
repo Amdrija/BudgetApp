@@ -9,6 +9,8 @@ namespace BudgetApp.Domain.Expense
         public string Name { get; set; }
 
         public Category.Category Category { get; set; }
+        
+        public Guid CategoryId { get; set; }
 
         public decimal Amount { get; set; }
 

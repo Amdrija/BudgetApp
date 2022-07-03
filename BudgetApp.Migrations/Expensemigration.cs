@@ -27,6 +27,9 @@ namespace BudgetApp.Migrations
                 .AsGuid()
                 .ForeignKey("Category", "Id")
                 .OnDelete(Rule.None)
+                .NotNullable()
+                .WithColumn("UserId")
+                .AsString()
                 .NotNullable();
         }
 

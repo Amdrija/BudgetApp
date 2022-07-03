@@ -85,7 +85,7 @@ namespace BudgetApp
 
             services.AddDbContext(this.Configuration)
                     .AddRepositories()
-                    .AddCategoryUseCases();
+                    .AddUseCases();
 
             services.AddValidatorsFromAssemblyContaining<ModifyCategoryAPIReqeustValidator>();
         }
