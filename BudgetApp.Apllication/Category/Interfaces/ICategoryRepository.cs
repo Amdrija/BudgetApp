@@ -10,6 +10,8 @@ namespace BudgetApp.Apllication.Category.Interfaces
         Task<BudgetApp.Domain.Category.Category> GetOneAsync(Guid id, string userId);
 
         Task<List<BudgetApp.Domain.Category.Category>> GetAsync(string userId);
+
+        Task<List<Domain.Category.Category>> GetByIdsAsync(string userId, List<Guid> ids);
         
         Task<Domain.Category.Category> AddAsync(Domain.Category.Category category);
 

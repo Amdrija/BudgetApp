@@ -38,6 +38,11 @@ namespace BudgetApp.EntityFramework
             return this.dbContext.Categories.Where(c => c.UserId == userId).ToListAsync();
         }
 
+        public Task<List<Category>> GetByIdsAsync(string userId, List<Guid> ids)
+        {
+            return this.dbContext.Categories.Where(c => ids.Contains(c.Id)).ToListAsync();
+        }
+
         public async Task<Category> AddAsync(Category category)
         {
             await this.dbContext.AddAsync(category);

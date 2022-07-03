@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using BudgetApp.Apllication.Category.Exception;
 using BudgetApp.Apllication.Expense.Exceptions;
+using BudgetApp.Apllication.Expense.GraphSearch;
 using BudgetApp.Apllication.Expense.Interfaces;
 using BudgetApp.Domain.Expense;
 using Microsoft.EntityFrameworkCore;
@@ -81,6 +82,47 @@ namespace BudgetApp.EntityFramework
             {
                 throw new ExpenseNotFoundException(expense.Id, expense.UserId);
             }
+        }
+
+        public Task<decimal> GetTotalAmount(string userId, DateTime? startDate, DateTime? endDate)
+        {
+            return this.FilterByDate(startDate, endDate)
+                       .Where(expense => expense.UserId == userId)
+                       .SumAsync(e => e.Amount);
+        }
+
+        public Task<List<GraphSearchByCategoryId>> GetAmountByCategory(
+            string userId,
+            DateTime? startDate,
+            DateTime? endDate,
+            List<Guid>? categoryIds)
+        {
+            return this.FilterByDate(startDate, endDate)
+                       .Where(expense => expense.UserId == userId)
+                       .Where(expense => categoryIds == null || categoryIds.Contains(expense.CategoryId))
+                       .GroupBy(e => e.CategoryId)
+                       .Select(g => new GraphSearchByCategoryId()
+                       {
+                           CategoryId = g.Key,
+                           Amount = g.Sum(x => x.Amount)
+                       })
+                       .ToListAsync();
+        }
+
+        private IQueryable<Expense> FilterByDate(DateTime? startDate, DateTime? endDate)
+        {
+            var query = this.dbContext.Expenses.AsQueryable();
+            if (startDate != null)
+            {
+                query = query.Where(e => e.Date >= startDate);
+            }
+
+            if (endDate != null)
+            {
+                query = query.Where(e => e.Date <= endDate);
+            }
+
+            return query;
         }
     }
 }

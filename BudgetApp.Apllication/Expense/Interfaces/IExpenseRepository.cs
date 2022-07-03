@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BudgetApp.Apllication.Expense.GraphSearch;
 
 namespace BudgetApp.Apllication.Expense.Interfaces
 {
@@ -13,5 +14,9 @@ namespace BudgetApp.Apllication.Expense.Interfaces
         Task<Domain.Expense.Expense> EditExpenseAsync(Domain.Expense.Expense expense);
 
         Task DeleteExpenseAsync(Domain.Expense.Expense expense);
+
+        Task<decimal> GetTotalAmount(string userId, DateTime? startDate, DateTime? endDate);
+
+        Task<List<GraphSearchByCategoryId>> GetAmountByCategory(string userId, DateTime? startDate, DateTime? endDate, List<Guid>? categoryIds);
     }
 }

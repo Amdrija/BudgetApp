@@ -17,6 +17,7 @@ using BudgetApp.Apllication.Expense.AddExpense;
 using BudgetApp.Apllication.Expense.DeleteExpense;
 using BudgetApp.Apllication.Expense.EditExpense;
 using BudgetApp.Apllication.Expense.GetExpense;
+using BudgetApp.Apllication.Expense.GraphSearch;
 using BudgetApp.Domain.Category;
 using BudgetApp.Domain.Expense;
 using BudgetApp.Exceptions;
@@ -109,6 +110,20 @@ namespace BudgetApp.Controllers
                     Id = id,
                     UserId = this.HttpContext.User.Identity.Name
                 });
+        }
+
+        [HttpGet("graph")]
+        public Task<GraphSearchResponse> GetGraph(
+            [FromServices] IUseCase<GraphSearchRequest, GraphSearchResponse> useCase,
+            [FromQuery] GraphSearchAPIRequest request)
+        {
+            return useCase.ExecuteAsync(new GraphSearchRequest()
+            {
+                CategoryIds = request.CategoryIds,
+                StartDate = request.StartDate == null ? null : TimeZoneInfo.ConvertTimeToUtc(request.StartDate.Value),
+                EndDate = request.EndDate == null ? null : TimeZoneInfo.ConvertTimeToUtc(request.EndDate.Value),
+                UserId = this.HttpContext.User.Identity.Name
+            });
         }
     }
 }
