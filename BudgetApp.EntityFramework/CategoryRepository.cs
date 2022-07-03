@@ -93,6 +93,10 @@ namespace BudgetApp.EntityFramework
             {
                 await this.dbContext.SaveChangesAsync();
             }
+            catch (DbUpdateConcurrencyException e)
+            {
+                throw new CategoryNotFoundException(category.Id, category.UserId);
+            }
             catch (DbUpdateException e) when (e.InnerException is PostgresException)
             {
                 //TODO: UPDATE TO PREFENT DELETE IF THERE ARE EXPENSES IN THE CATEGORY
