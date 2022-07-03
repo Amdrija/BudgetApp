@@ -15,6 +15,7 @@ using BudgetApp.Apllication.Category.GetCategories;
 using BudgetApp.Apllication.Category.GetCategory;
 using BudgetApp.Apllication.Expense.AddExpense;
 using BudgetApp.Apllication.Expense.EditExpense;
+using BudgetApp.Apllication.Expense.GetExpense;
 using BudgetApp.Domain.Category;
 using BudgetApp.Domain.Expense;
 using BudgetApp.Exceptions;
@@ -75,6 +76,21 @@ namespace BudgetApp.Controllers
                     Description = request.Decription,
                     Id = id,
                     Name = request.Name,
+                    UserId = this.HttpContext.User.Identity.Name
+                });
+
+            return response.Expense;
+        }
+        
+        [HttpGet("{id}")]
+        public async Task<Expense> GetExpense(
+            [FromServices] IUseCase<GetExpenseRequest, GetExpenseResponse> useCase,
+            [FromRoute] Guid id)
+        {
+            var response = await useCase.ExecuteAsync(
+                new GetExpenseRequest()
+                {
+                    Id = id,
                     UserId = this.HttpContext.User.Identity.Name
                 });
 

@@ -8,6 +8,7 @@ using BudgetApp.Apllication.Category.GetCategories;
 using BudgetApp.Apllication.Category.GetCategory;
 using BudgetApp.Apllication.Expense.AddExpense;
 using BudgetApp.Apllication.Expense.EditExpense;
+using BudgetApp.Apllication.Expense.GetExpense;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BudgetApp.Configuration
@@ -33,7 +34,8 @@ namespace BudgetApp.Configuration
         public static IServiceCollection AddExpenseUseCases(this IServiceCollection services)
         {
             return services.AddTransient<IUseCase<List<AddExpenseRequest>, AddExpenseResponse>, AddExpenseUseCase>()
-                           .AddTransient<IUseCase<EditExpenseRequest, EditExpenseResponse>, EditExpenseUseCase>();
+                           .AddTransient<IUseCase<EditExpenseRequest, EditExpenseResponse>, EditExpenseUseCase>()
+                           .AddTransient<IUseCase<GetExpenseRequest, GetExpenseResponse>, GetExpenseUseCase>();
         }
     }
 }

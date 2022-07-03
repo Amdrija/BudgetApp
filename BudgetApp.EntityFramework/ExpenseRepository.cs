@@ -24,6 +24,7 @@ namespace BudgetApp.EntityFramework
         public async Task<Expense> GetOneAsync(Guid id, string userId)
         {
             var expense = await this.dbContext.Expenses.Where(e => e.Id == id && e.UserId == userId)
+                                    .Include(e => e.Category)
                                     .FirstOrDefaultAsync();
 
             if (expense == null)
