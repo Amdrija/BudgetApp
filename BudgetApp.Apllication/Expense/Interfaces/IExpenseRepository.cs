@@ -11,5 +11,7 @@ namespace BudgetApp.Apllication.Expense.Interfaces
         Task<List<Domain.Expense.Expense>> AddExpensesAsync(List<Domain.Expense.Expense> expenses);
 
         Task<Domain.Expense.Expense> EditExpenseAsync(Domain.Expense.Expense expense);
+
+        Task DeleteExpenseAsync(Domain.Expense.Expense expense);
     }
 }

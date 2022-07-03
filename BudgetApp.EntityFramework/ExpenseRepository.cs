@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using System.Xml;
 using BudgetApp.Apllication.Category.Exception;
@@ -65,6 +67,20 @@ namespace BudgetApp.EntityFramework
             }
 
             return expense;
+        }
+
+        public async Task DeleteExpenseAsync(Expense expense)
+        {
+            this.dbContext.Remove(expense);
+
+            try
+            {
+                await this.dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                throw new ExpenseNotFoundException(expense.Id, expense.UserId);
+            }
         }
     }
 }

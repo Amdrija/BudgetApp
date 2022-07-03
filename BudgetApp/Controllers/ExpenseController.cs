@@ -14,6 +14,7 @@ using BudgetApp.Apllication.Category.EditCategory;
 using BudgetApp.Apllication.Category.GetCategories;
 using BudgetApp.Apllication.Category.GetCategory;
 using BudgetApp.Apllication.Expense.AddExpense;
+using BudgetApp.Apllication.Expense.DeleteExpense;
 using BudgetApp.Apllication.Expense.EditExpense;
 using BudgetApp.Apllication.Expense.GetExpense;
 using BudgetApp.Domain.Category;
@@ -95,6 +96,19 @@ namespace BudgetApp.Controllers
                 });
 
             return response.Expense;
+        }
+        
+        [HttpDelete("{id}")]
+        public async Task DeleteExpense(
+            [FromServices] IUseCase<DeleteExpenseRequest, DeleteExpenseResponse> useCase,
+            [FromRoute] Guid id)
+        { 
+            await useCase.ExecuteAsync(
+                new DeleteExpenseRequest()
+                {
+                    Id = id,
+                    UserId = this.HttpContext.User.Identity.Name
+                });
         }
     }
 }
