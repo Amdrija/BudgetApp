@@ -18,6 +18,7 @@ using BudgetApp.Apllication.Expense.DeleteExpense;
 using BudgetApp.Apllication.Expense.EditExpense;
 using BudgetApp.Apllication.Expense.GetExpense;
 using BudgetApp.Apllication.Expense.GraphSearch;
+using BudgetApp.Apllication.Expense.Search;
 using BudgetApp.Domain.Category;
 using BudgetApp.Domain.Expense;
 using BudgetApp.Exceptions;
@@ -124,6 +125,24 @@ namespace BudgetApp.Controllers
                 EndDate = request.EndDate == null ? null : TimeZoneInfo.ConvertTimeToUtc(request.EndDate.Value),
                 UserId = this.HttpContext.User.Identity.Name
             });
+        }
+        
+        [HttpGet()]
+        public async Task<List<Expense>> Get(
+            [FromServices] IUseCase<SearchRequest, SearchResponse> useCase,
+            [FromQuery] SearchAPIRequest request)
+        {
+            var response = await useCase.ExecuteAsync(new SearchRequest()
+            {
+                CategoryIds = request.CategoryIds,
+                StartDate = request.StartDate == null ? null : TimeZoneInfo.ConvertTimeToUtc(request.StartDate.Value),
+                EndDate = request.EndDate == null ? null : TimeZoneInfo.ConvertTimeToUtc(request.EndDate.Value),
+                UserId = this.HttpContext.User.Identity.Name,
+                MinimumAmount = request.MinimumAmount,
+                MaximumAmount = request.MaximumAmount
+            });
+
+            return response.Expenses;
         }
     }
 }

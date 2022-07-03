@@ -11,6 +11,7 @@ using BudgetApp.Apllication.Expense.DeleteExpense;
 using BudgetApp.Apllication.Expense.EditExpense;
 using BudgetApp.Apllication.Expense.GetExpense;
 using BudgetApp.Apllication.Expense.GraphSearch;
+using BudgetApp.Apllication.Expense.Search;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BudgetApp.Configuration
@@ -39,7 +40,8 @@ namespace BudgetApp.Configuration
                            .AddTransient<IUseCase<EditExpenseRequest, EditExpenseResponse>, EditExpenseUseCase>()
                            .AddTransient<IUseCase<GetExpenseRequest, GetExpenseResponse>, GetExpenseUseCase>()
                            .AddTransient<IUseCase<DeleteExpenseRequest, DeleteExpenseResponse>, DeleteExpenseUseCase>()
-                           .AddTransient<IUseCase<GraphSearchRequest, GraphSearchResponse>, GraphSearchUseCase>();
+                           .AddTransient<IUseCase<GraphSearchRequest, GraphSearchResponse>, GraphSearchUseCase>()
+                           .AddTransient<IUseCase<SearchRequest, SearchResponse>,SearchUseCase>();
         }
     }
 }

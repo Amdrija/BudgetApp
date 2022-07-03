@@ -9,6 +9,7 @@ using BudgetApp.Apllication.Category.Exception;
 using BudgetApp.Apllication.Expense.Exceptions;
 using BudgetApp.Apllication.Expense.GraphSearch;
 using BudgetApp.Apllication.Expense.Interfaces;
+using BudgetApp.Apllication.Expense.Search;
 using BudgetApp.Domain.Expense;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -107,6 +108,29 @@ namespace BudgetApp.EntityFramework
                            Amount = g.Sum(x => x.Amount)
                        })
                        .ToListAsync();
+        }
+
+        public Task<List<Expense>> GetAsync(SearchRequest request)
+        {
+            var query = this.FilterByDate(request.StartDate, request.EndDate)
+                            .Where(e => e.UserId == request.UserId);
+
+            if (request.CategoryIds != null)
+            {
+                query = query.Where(e => request.CategoryIds.Contains(e.CategoryId));
+            }
+
+            if (request.MinimumAmount != null)
+            {
+                query = query.Where(e => e.Amount >= request.MinimumAmount);
+            }
+
+            if (request.MaximumAmount != null)
+            {
+                query = query.Where(e => e.Amount <= request.MaximumAmount);
+            }
+
+            return query.ToListAsync();
         }
 
         private IQueryable<Expense> FilterByDate(DateTime? startDate, DateTime? endDate)
