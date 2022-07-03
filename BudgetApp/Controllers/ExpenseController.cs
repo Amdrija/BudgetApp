@@ -14,6 +14,7 @@ using BudgetApp.Apllication.Category.EditCategory;
 using BudgetApp.Apllication.Category.GetCategories;
 using BudgetApp.Apllication.Category.GetCategory;
 using BudgetApp.Apllication.Expense.AddExpense;
+using BudgetApp.Apllication.Expense.EditExpense;
 using BudgetApp.Domain.Category;
 using BudgetApp.Domain.Expense;
 using BudgetApp.Exceptions;
@@ -57,6 +58,27 @@ namespace BudgetApp.Controllers
                     }).ToList());
 
             return response.Expenses;
+        }
+
+        [HttpPost("{id}")]
+        public async Task<Expense> EditExpense(
+            [FromServices] IUseCase<EditExpenseRequest, EditExpenseResponse> useCase,
+            [FromRoute] Guid id,
+            [FromBody] ModifyExpenseAPIRequest request)
+        {
+            var response = await useCase.ExecuteAsync(
+                new EditExpenseRequest()
+                {
+                    Amount = request.Amount,
+                    CategoryId = request.CategoryId,
+                    Date = request.Date,
+                    Description = request.Decription,
+                    Id = id,
+                    Name = request.Name,
+                    UserId = this.HttpContext.User.Identity.Name
+                });
+
+            return response.Expense;
         }
     }
 }

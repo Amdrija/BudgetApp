@@ -23,6 +23,7 @@ namespace BudgetApp.Migrations
                 .NotNullable()
                 .WithColumn("Description")
                 .AsString()
+                .Nullable()
                 .WithColumn("CategoryId")
                 .AsGuid()
                 .ForeignKey("Category", "Id")
