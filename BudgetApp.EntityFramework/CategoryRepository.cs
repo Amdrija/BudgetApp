@@ -97,10 +97,9 @@ namespace BudgetApp.EntityFramework
             {
                 throw new CategoryNotFoundException(category.Id, category.UserId);
             }
-            catch (DbUpdateException e) when (e.InnerException is PostgresException)
+            catch (DbUpdateException e) when (e.InnerException is PostgresException {SqlState: "23503"})
             {
-                //TODO: UPDATE TO PREFENT DELETE IF THERE ARE EXPENSES IN THE CATEGORY
-                throw new CategoryNameTakenException(category.Name);
+                throw new CannotDeleteCategoryWithExpensesException();
             }
         }
     }

@@ -15,7 +15,6 @@ namespace BudgetApp.Apllication.Category.DeleteCategory
 
         public async Task<DeleteCategoryResponse> ExecuteAsync(DeleteCategoryRequest request)
         {
-            //TODO: CHECK IF ANY EXPENSE IS ASOCIATED WITH THIS CATEGORY
             await this.repository.DeleteAsync(new Domain.Category.Category()
             {
                 UserId = request.UserId,
