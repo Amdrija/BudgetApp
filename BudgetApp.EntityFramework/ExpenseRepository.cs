@@ -130,7 +130,7 @@ namespace BudgetApp.EntityFramework
                 query = query.Where(e => e.Amount <= request.MaximumAmount);
             }
 
-            return query.ToListAsync();
+            return query.Include(e => e.Category).ToListAsync();
         }
 
         private IQueryable<Expense> FilterByDate(DateTime? startDate, DateTime? endDate)
