@@ -12,6 +12,6 @@ namespace BudgetApp.Requests
 
         public DateTime Date { get; set; }
 
-        public string? Decription { get; set; }
+        public string? Description { get; set; }
     }
 }

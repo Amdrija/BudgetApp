@@ -56,7 +56,7 @@ namespace BudgetApp.Controllers
                         Amount = e.Amount,
                         CategoryId = e.CategoryId,
                         Date = e.Date,
-                        Description = e.Decription,
+                        Description = e.Description,
                         Name = e.Name,
                         UserId = this.HttpContext.User.Identity.Name
                     }).ToList());
@@ -76,7 +76,7 @@ namespace BudgetApp.Controllers
                     Amount = request.Amount,
                     CategoryId = request.CategoryId,
                     Date = request.Date,
-                    Description = request.Decription,
+                    Description = request.Description,
                     Id = id,
                     Name = request.Name,
                     UserId = this.HttpContext.User.Identity.Name
