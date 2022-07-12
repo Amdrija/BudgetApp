@@ -88,6 +88,12 @@ namespace BudgetApp
                     .AddUseCases();
 
             services.AddValidatorsFromAssemblyContaining<ModifyCategoryAPIReqeustValidator>();
+
+            services.AddCors(
+                options =>
+                {
+                    options.AddDefaultPolicy(p => p.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin());
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -103,6 +109,8 @@ namespace BudgetApp
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
             
             app.UseAuthentication();
             app.UseAuthorization();

@@ -62,7 +62,7 @@ namespace BudgetApp.Controllers
         {
             AddCategoryResponse response = await useCase.ExecuteAsync(new AddCategoryRequest()
             {
-                Color = request.Color,
+                Color = request.Color.ToUpper(),
                 Name = request.Name,
                 UserId = HttpContext.User.Identity.Name
             });
@@ -79,7 +79,7 @@ namespace BudgetApp.Controllers
             EditCategoryResponse response = await useCase.ExecuteAsync(new EditCategoryRequest()
             {
                 Id = id,
-                Color = request.Color,
+                Color = request.Color.ToUpper(),
                 Name = request.Name,
                 UserId = HttpContext.User.Identity.Name
             });
